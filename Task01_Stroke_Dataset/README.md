@@ -15,6 +15,7 @@ Predict whether a patient is likely to have a **stroke** from age, health condit
 6. **Stratified train/test split** (80 / 20).
 7. **Pipeline + ColumnTransformer + SMOTE** – SMOTE inside an `imblearn` pipeline so only the training folds are oversampled (no leakage).
 8. **11 models** compared with stratified 5-fold CV → **GridSearchCV** on the top 3 → final test evaluation.
+9. **Gradio section** at the end of the notebook – a small app to try the model on a new patient (runs inside the notebook).
 
 ## Results
 | Model (CV, top 5) | ROC-AUC | Recall | F1 |
@@ -34,6 +35,8 @@ Predict whether a patient is likely to have a **stroke** from age, health condit
 
 ## Run
 ```bash
-pip install pandas numpy matplotlib seaborn scipy scikit-learn imbalanced-learn xgboost lightgbm
+pip install pandas numpy matplotlib seaborn scipy scikit-learn imbalanced-learn xgboost lightgbm gradio
 ```
 Open `notebook.ipynb` and run all cells (≈ 1 minute).
+> **Python 3.9 only:** also run `pip install "huggingface_hub<1.0"` – gradio 4.44 (the last version for Python 3.9) does not work with huggingface_hub 1.x (`ImportError: cannot import name 'HfFolder'`).
+

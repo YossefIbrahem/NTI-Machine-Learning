@@ -14,6 +14,7 @@ Predict the **monthly rent (INR)** of a house / flat in 6 Indian cities from siz
 5. **Train/test split** (80 / 20), then **outliers** removed with the IQR rule on log(rent per sqft) – limits learned from the training data only.
 6. **Pipeline + ColumnTransformer** – median / most-frequent imputers, StandardScaler, OneHotEncoder (`drop='first'` to avoid the dummy variable trap).
 7. **13 regression models** compared with 5-fold CV → **GridSearchCV** on the top 3 → final test evaluation.
+8. **Gradio section** at the end of the notebook – a small app to estimate the rent of a new flat (runs inside the notebook).
 
 ## Results
 | Model (CV, top 5) | Train R² | CV R² | CV RMSE |
@@ -35,6 +36,8 @@ Linear models reach 0.829 (close to the best, because log rent is almost linear 
 
 ## Run
 ```bash
-pip install pandas numpy matplotlib seaborn scipy scikit-learn xgboost lightgbm
+pip install pandas numpy matplotlib seaborn scipy scikit-learn xgboost lightgbm gradio
 ```
 Open `notebook.ipynb` and run all cells (≈ 1 minute).
+> **Python 3.9 only:** also run `pip install "huggingface_hub<1.0"` – gradio 4.44 (the last version for Python 3.9) does not work with huggingface_hub 1.x (`ImportError: cannot import name 'HfFolder'`).
+

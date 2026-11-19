@@ -15,6 +15,7 @@ Predict the **segment (A, B, C, D)** of a new customer of an automobile company,
 5. **Encoding** – `Spending_Score` with **OrdinalEncoder** (Low < Average < High), other categories with OneHotEncoder.
 6. **Pipeline + ColumnTransformer** – no data leakage.
 7. **11 classification models** compared with stratified 5-fold CV → **GridSearchCV** on the top 3 → final test evaluation.
+8. **Gradio section** at the end of the notebook – a small app that predicts the segment of a new customer and shows the probability of all 4 segments.
 
 ## Results
 | Model (CV, top 5) | Train Acc. | CV Accuracy | F1 (macro) | ROC-AUC (ovr) |
@@ -36,6 +37,8 @@ Decision Tree, Random Forest and Extra Trees overfit badly (0.96 train → 0.44 
 
 ## Run
 ```bash
-pip install pandas numpy matplotlib seaborn scipy scikit-learn xgboost lightgbm
+pip install pandas numpy matplotlib seaborn scipy scikit-learn xgboost lightgbm gradio
 ```
 Open `notebook.ipynb` and run all cells (≈ 2 minutes).
+> **Python 3.9 only:** also run `pip install "huggingface_hub<1.0"` – gradio 4.44 (the last version for Python 3.9) does not work with huggingface_hub 1.x (`ImportError: cannot import name 'HfFolder'`).
+

@@ -15,7 +15,7 @@ Predicting the price (EGP) of a property in Egypt from 27k+ real listings.
 
 ## Tasks
 Every task follows the same workflow: data understanding → cleaning → EDA & statistical tests → outliers → feature engineering / selection →
-train/test split → Pipeline + ColumnTransformer → all suitable models with cross-validation → comparison table → GridSearchCV (top 3) → final test evaluation.
+train/test split → Pipeline + ColumnTransformer → all suitable models with cross-validation → comparison table → GridSearchCV (top 3) → final test evaluation → Gradio app section to try the model.
 
 | # | Task | Type | Models | Best model | Test result | Live app |
 |---|---|---|---|---|---|---|

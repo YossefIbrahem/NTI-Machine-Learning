@@ -15,6 +15,7 @@ Predict a student's **Performance Index (10 – 100)** from study hours, previou
 5. **Train/test split** (80 / 20).
 6. **Pipeline + ColumnTransformer** – imputers, StandardScaler, OneHotEncoder (`drop='if_binary'`).
 7. **13 regression models** compared with 5-fold CV → **GridSearchCV** on the top 3 → final test evaluation → model saved for the app.
+8. **Gradio section** at the end of the notebook – runs the app inside the notebook (the same app as `app.py`).
 
 ## Results
 | Model (CV, top 6) | Train R² | CV R² | CV RMSE |
@@ -44,4 +45,7 @@ The app loads `models/student_model.pkl` – the full pipeline (imputers + scale
 2. Upload `app.py`, `requirements.txt` and the `models/` folder.
 3. When the build finishes, the Space link is the live deployment link – paste it above.
 
-To re-train: `pip install pandas numpy matplotlib seaborn scipy scikit-learn xgboost lightgbm`, then run all cells of `notebook.ipynb` (≈ 30 seconds).
+To re-train: `pip install pandas numpy matplotlib seaborn scipy scikit-learn xgboost lightgbm gradio`, then run all cells of `notebook.ipynb` (≈ 30 seconds).
+
+> **Python 3.9 only:** also run `pip install "huggingface_hub<1.0"` – gradio 4.44 (the last version for Python 3.9) does not work with huggingface_hub 1.x (`ImportError: cannot import name 'HfFolder'`).
+

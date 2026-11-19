@@ -57,4 +57,7 @@ The app asks only for **HbA1c** and **blood sugar** (the only useful features), 
 2. Upload `app.py`, `requirements.txt` and the `models/` folder.
 3. When the build finishes, the Space link is the live deployment link – paste it above.
 
-To re-train: `pip install pandas numpy matplotlib seaborn scipy scikit-learn imbalanced-learn xgboost lightgbm`, then run all cells of `notebook.ipynb` (≈ 20 seconds).
+To re-train: `pip install pandas numpy matplotlib seaborn scipy scikit-learn imbalanced-learn xgboost lightgbm gradio`, then run all cells of `notebook.ipynb` (≈ 20 seconds).
+
+> **Python 3.9 only:** also run `pip install "huggingface_hub<1.0"` – gradio 4.44 (the last version for Python 3.9) does not work with huggingface_hub 1.x (`ImportError: cannot import name 'HfFolder'`).
+

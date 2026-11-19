@@ -24,9 +24,14 @@ train/test split → Pipeline + ColumnTransformer → all suitable models with c
 | 03 | [Student Performance](Task03_Student_Performance) | Regression | 13 | Ridge | R² 0.989, MAE 1.65 | 🚀 `ADD_LINK` |
 | 04 | [Customer Segmentation](Task04_Customer_Segmentation) | Multiclass classification (4 segments) | 11 | LightGBM | Accuracy 0.54, ROC-AUC 0.80 | – |
 
+## Practice Notebooks
+[`Practice_Notebooks`](Practice_Notebooks) – 19 session and assignment notebooks from the DEPI / Udemy practice, named after their datasets
+(Adult Census, Ames Housing, Bank Marketing, Breast Cancer, Telecom Churn, Laptop Prices, WiDS Datathon, ...).
+
 ## Repository Structure
 ```
 NTI-Machine-Learning/
+├── Practice_Notebooks/             # 19 practice notebooks, named by dataset
 ├── Task01_Stroke_Dataset/          # dataset/, notebook.ipynb, README.md
 ├── Task02_House_Rent/              # dataset/, notebook.ipynb, README.md
 ├── Task03_Student_Performance/     # dataset/, notebook.ipynb, README.md, app.py, requirements.txt, models/

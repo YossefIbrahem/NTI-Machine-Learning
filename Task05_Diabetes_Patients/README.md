@@ -18,6 +18,7 @@ Predict whether a patient is **Diabetic** or **Non-Diabetic** from lab results, 
 7. **Imbalance** – SMOTE was tested and made the model worse (0.9885 → 0.983), so stratified CV + macro F1 are used instead.
 8. **Pipeline + ColumnTransformer** (median imputer + StandardScaler).
 9. **11 classification models** compared with stratified 5-fold CV → **GridSearchCV** on the top 3 → final test evaluation → error analysis → model saved for the app.
+10. **Gradio section** at the end of the notebook – runs the app inside the notebook (the same app as `app.py`).
 
 ## Results
 | Model (CV) | F1 (macro) | Recall Non-Diabetic | Recall Diabetic | ROC-AUC |

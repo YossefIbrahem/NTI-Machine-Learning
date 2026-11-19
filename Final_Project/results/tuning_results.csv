@@ -1,0 +1,4 @@
+,CV R2 before tuning,CV R2 after tuning,Improvement,Best params
+SVR,0.6751654085903993,0.6841468049455051,0.008981396355105753,"{'model__C': 3, 'model__gamma': 'scale'}"
+XGBoost,0.6679752294565108,0.6810520013080278,0.01307677185151701,"{'model__learning_rate': 0.1, 'model__max_depth': 8, 'model__n_estimators': 600}"
+Random Forest,0.6647944333449101,0.6725329942388896,0.007738560893979507,"{'model__max_features': 0.3, 'model__min_samples_leaf': 1, 'model__n_estimators': 200}"

@@ -23,6 +23,7 @@ train/test split → Pipeline + ColumnTransformer → all suitable models with c
 | 02 | [House Rent](Task02_House_Rent) | Regression | 13 | Gradient Boosting | R² 0.83 (log rent) | – |
 | 03 | [Student Performance](Task03_Student_Performance) | Regression | 13 | Ridge | R² 0.989, MAE 1.65 | 🚀 `ADD_LINK` |
 | 04 | [Customer Segmentation](Task04_Customer_Segmentation) | Multiclass classification (4 segments) | 11 | LightGBM | Accuracy 0.54, ROC-AUC 0.80 | – |
+| 05 | [Diabetes Prediction](Task05_Diabetes_Patients) | Binary classification (imbalanced) | 11 | Logistic Regression | Accuracy 99.75 %, F1 macro 0.992 | 🚀 `ADD_LINK` |
 
 ## Practice Notebooks
 [`Practice_Notebooks`](Practice_Notebooks) – 19 session and assignment notebooks from the DEPI / Udemy practice, named after their datasets
@@ -36,6 +37,7 @@ NTI-Machine-Learning/
 ├── Task02_House_Rent/              # dataset/, notebook.ipynb, README.md
 ├── Task03_Student_Performance/     # dataset/, notebook.ipynb, README.md, app.py, requirements.txt, models/
 ├── Task04_Customer_Segmentation/   # dataset/, notebook.ipynb, README.md
+├── Task05_Diabetes_Patients/       # dataset/, notebook.ipynb, README.md, app.py, requirements.txt, models/
 ├── Final_Project/
 │   ├── dataset/  notebooks/  models/  results/
 │   ├── app.py  requirements.txt  README.md

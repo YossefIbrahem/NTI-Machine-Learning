@@ -59,7 +59,7 @@ Final_Project/
 9. **13 models** compared with 5-fold cross-validation on the training data.
 10. **GridSearchCV** on the top 3 models, best model chosen by CV score (the test set is used only once at the end).
 11. **Evaluation** on the test set – MAE, MSE, RMSE, R², actual-vs-predicted, residuals, error by type, permutation importance.
-12. **Deployment** – the saved Pipeline is served with Gradio (`app.py`).
+12. **Deployment** – the saved Pipeline is served with Gradio (`app.py`); the same app also runs inside the notebook (Gradio section at the end).
 
 ## 5. Results
 

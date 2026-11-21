@@ -9,15 +9,15 @@ Predict whether a patient is **Diabetic** or **Non-Diabetic** from lab results, 
 
 ## Steps
 1. **Cleaning** – dropped 15 rows without a class, the `Patient_ID` column and 56 almost-empty rows (5+ of 8 features missing); no duplicates left; other missing values imputed inside the pipeline.
-2. **EDA & statistics** – distributions by class, t-tests and chi-square: only **HbA1c** and **Blood Sugar** differ between the classes.
-   The scatter plot shows the rule: **Non-Diabetic ⇔ HbA1c ≤ 6.0 % and sugar ≤ 140 mg/dL**.
+2. **EDA** – distributions by class and correlation heatmap: only **HbA1c** and **Blood Sugar** differ between the classes.
+   Non-Diabetic patients stay below the usual medical limits: **HbA1c ≤ 6.0 % and sugar ≤ 140 mg/dL**.
 3. **Outliers** – none (all values within normal medical ranges).
 4. **Feature engineering** – medical flags `High_HbA1c` (> 6.0 %) and `High_Sugar` (> 140 mg/dL).
 5. **Stratified train/test split** (80 / 20).
-6. **Feature selection on the training data** – Age, Gender, Creatinine, BMI, Urea, Cholesterol not significant → dropped (CV confirmed no loss).
+6. **Feature selection on the training data** – t-tests and chi-square: Age, Gender, Creatinine, BMI, Urea, Cholesterol not significant → dropped (CV confirmed no loss).
 7. **Imbalance** – SMOTE was tested and made the model worse (0.9885 → 0.983), so stratified CV + macro F1 are used instead.
 8. **Pipeline + ColumnTransformer** (median imputer + StandardScaler).
-9. **11 classification models** compared with stratified 5-fold CV → **GridSearchCV** on the top 3 → final test evaluation → error analysis → model saved for the app.
+9. **11 classification models** compared with stratified 5-fold CV → **GridSearchCV** on the top 3 → final test evaluation → model saved for the app.
 10. **Gradio section** at the end of the notebook – runs the app inside the notebook (the same app as `app.py`).
 
 ## Results
@@ -40,7 +40,7 @@ Predict whether a patient is **Diabetic** or **Non-Diabetic** from lab results, 
 **Final model – Logistic Regression (test set):** accuracy **99.75 %**, F1 (macro) **0.992**, ROC-AUC **0.998**,
 Diabetic recall **1.000** (no diabetic patient missed), Non-Diabetic recall 0.971.
 
-- Only **5 mistakes out of 1,986**, all Non-Diabetic patients with a **missing blood sugar** value. With both lab values known the model is **100 % correct**.
+- Only **5 mistakes out of 1,986** (confusion matrix), all of them Non-Diabetic patients predicted as Diabetic – a false alarm, never a missed diabetic.
 - A depth-2 Decision Tree trained on the training data finds the same medical rule: HbA1c ≤ 6.05 and sugar ≤ 140.5 → Non-Diabetic.
 - The data looks generated from this rule; real hospital data would be harder.
 

@@ -25,6 +25,7 @@ They show the step-by-step learning path (data preprocessing, visualization, enc
 | [Stroke_Prediction](Stroke_Prediction.ipynb) | Stroke Prediction | preprocessing + imbalanced data (SMOTE, class weights) | Assignment_2 |
 | [Student_Performance](Student_Performance.ipynb) | Student Performance | Linear Regression / Ridge | Session6 |
 | [Telecom_Churn](Telecom_Churn.ipynb) | Telecom churn | churn classification with 6 models, GridSearchCV | Telecom_Churn |
+| [Used_Cars_Prices](Used_Cars_Prices.ipynb) | Used cars (Egypt, `used_cars_dataset.csv`) | cleaning messy data, classification (sold within 30 days) + price regression, GridSearchCV, RandomizedSearchCV, cross-validation, feature selection | notebook13595b5c02 |
 | [WiDS_Datathon](WiDS_Datathon.ipynb) | WiDS Datathon (building energy) | data preprocessing + first models | Session7 |
 
 **Note:** these notebooks read their CSV files from local paths on the author's computer (e.g. `/Users/.../NTI/`), so the datasets are not included here.

@@ -26,13 +26,13 @@ train/test split → Pipeline + ColumnTransformer → all suitable models with c
 | 05 | [Diabetes Prediction](Task05_Diabetes_Patients) | Binary classification (imbalanced) | 11 | Logistic Regression | Accuracy 99.75 %, F1 macro 0.992 | 🚀 `ADD_LINK` |
 
 ## Practice Notebooks
-[`Practice_Notebooks`](Practice_Notebooks) – 19 session and assignment notebooks from the DEPI / Udemy practice, named after their datasets
-(Adult Census, Ames Housing, Bank Marketing, Breast Cancer, Telecom Churn, Laptop Prices, WiDS Datathon, ...).
+[`Practice_Notebooks`](Practice_Notebooks) – 20 session and assignment notebooks from the DEPI / Udemy practice, named after their datasets
+(Adult Census, Ames Housing, Bank Marketing, Breast Cancer, Telecom Churn, Laptop Prices, Used Cars, WiDS Datathon, ...).
 
 ## Repository Structure
 ```
 NTI-Machine-Learning/
-├── Practice_Notebooks/             # 19 practice notebooks, named by dataset
+├── Practice_Notebooks/             # 20 practice notebooks, named by dataset
 ├── Task01_Stroke_Dataset/          # dataset/, notebook.ipynb, README.md
 ├── Task02_House_Rent/              # dataset/, notebook.ipynb, README.md
 ├── Task03_Student_Performance/     # dataset/, notebook.ipynb, README.md, app.py, requirements.txt, models/

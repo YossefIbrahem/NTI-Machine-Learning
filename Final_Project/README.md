@@ -1,9 +1,9 @@
 # Egypt House Price Prediction 🏠
 
 Predicting the price (EGP) of a property in Egypt from its description, using a full machine-learning workflow:
-data cleaning → EDA → feature engineering → Pipeline / ColumnTransformer → 13 regression models → GridSearchCV → test evaluation → Gradio deployment.
+data cleaning → EDA → feature engineering → Pipeline / ColumnTransformer → 13 regression models → GridSearchCV → test evaluation → deployment.
 
-**Live app:** `ADD_YOUR_HUGGING_FACE_LINK_HERE`
+**Live app:** https://huggingface.co/spaces/YoussefIbrahem0/egypt-house-price-prediction
 
 ---
 
@@ -39,7 +39,8 @@ Final_Project/
 ├── models/house_price_model.pkl         # trained Pipeline (preprocessing + best model)
 ├── models/choices.json                  # dropdown values used by the app
 ├── results/                             # comparison tables and plots
-├── app.py                               # Gradio app
+├── static_app/                          # live web app (index.html, model.js, model.json, export_model.py)
+├── app.py                               # Gradio app (run locally)
 ├── requirements.txt
 ├── linkedin_post.md                     # draft of the LinkedIn post
 └── README.md
@@ -59,7 +60,7 @@ Final_Project/
 9. **13 models** compared with 5-fold cross-validation on the training data.
 10. **GridSearchCV** on the top 3 models, best model chosen by CV score (the test set is used only once at the end).
 11. **Evaluation** on the test set – MAE, MSE, RMSE, R², actual-vs-predicted, residuals, error by type, permutation importance.
-12. **Deployment** – the saved Pipeline is served with Gradio (`app.py`); the same app also runs inside the notebook (Gradio section at the end).
+12. **Deployment** – the saved Pipeline is exported to a web app on Hugging Face Spaces (`static_app/`), and it is also served with Gradio (`app.py`, and the Gradio section at the end of the notebook).
 
 ## 5. Results
 
@@ -111,13 +112,21 @@ python app.py              # opens the app at http://127.0.0.1:7860
 To re-train, open `notebooks/egypt_house_prices.ipynb` and run all cells (about 20 minutes, mostly SVR and the grid search).
 The notebook saves the model to `models/` and the tables / plots to `results/`.
 
-## 7. Deployment (Hugging Face Spaces – free)
-1. Create a new Space at https://huggingface.co/new-space → SDK **Gradio**.
-2. Upload `app.py`, `requirements.txt` and the `models/` folder (`house_price_model.pkl` + `choices.json`).
-3. Wait for the build to finish – the Space link is the live deployment link. Paste it at the top of this README.
+## 7. Deployment (Hugging Face Spaces – free static Space)
+**Live app:** https://huggingface.co/spaces/YoussefIbrahem0/egypt-house-price-prediction
 
-The app loads the trained Pipeline, so the same imputation, scaling and encoding used in training are applied to the user's input,
-and it shows a real prediction from the model.
+Hugging Face now needs a PRO subscription to host Gradio Spaces, while static Spaces stay free. So the trained model runs directly in the browser:
+
+1. `static_app/export_model.py` reads `models/house_price_model.pkl` and saves everything the Pipeline needs to `static_app/model.json`:
+   the imputer and scaler values, the one-hot categories (including the "infrequent" group for rare compounds and cities)
+   and the SVR model (15,271 support vectors, dual coefficients, gamma, intercept).
+2. `static_app/model.js` repeats the Pipeline step by step – feature engineering → scaling → one-hot → RBF-kernel SVR → `expm1` of the log price.
+3. `static_app/index.html` is the form; it predicts instantly as you type.
+
+The JavaScript predictions were checked against `model.predict` on 3,011 inputs (every compound and city, unseen values, the app examples):
+the largest difference was 0.000007 EGP, so the web app gives **exactly** the same prices as the Python model.
+
+To update the live app after re-training: run `python static_app/export_model.py`, then upload `index.html`, `model.js` and `model.json` to the Space.
 
 ## 8. Conclusions & Recommendations
 - Location (Compound, City) and size (Area, rooms) explain most of the price; non-linear models clearly beat linear ones.

@@ -9,9 +9,9 @@ Predicting the price (EGP) of a property in Egypt from 27k+ real listings.
 - Data cleaning, EDA, outlier handling, feature engineering, Pipeline + ColumnTransformer
 - 13 regression models compared with 5-fold cross-validation, GridSearchCV on the top 3
 - Best model: **SVR** – test **R² = 0.67** (log price), median error ≈ 25 %
-- Deployed as a **Gradio** app
+- Deployed as a web app on **Hugging Face Spaces** (plus a Gradio app to run locally)
 
-📁 [Final_Project](Final_Project) · 🚀 Live app: `ADD_YOUR_HUGGING_FACE_LINK_HERE`
+📁 [Final_Project](Final_Project) · 🚀 Live app: [huggingface.co/spaces/YoussefIbrahem0/egypt-house-price-prediction](https://huggingface.co/spaces/YoussefIbrahem0/egypt-house-price-prediction)
 
 ## Tasks
 Every task follows the same workflow: data understanding → cleaning → EDA & statistical tests → outliers → feature engineering / selection →
@@ -39,7 +39,7 @@ NTI-Machine-Learning/
 ├── Task04_Customer_Segmentation/   # dataset/, notebook.ipynb, README.md
 ├── Task05_Diabetes_Patients/       # dataset/, notebook.ipynb, README.md, app.py, requirements.txt, models/
 ├── Final_Project/
-│   ├── dataset/  notebooks/  models/  results/
+│   ├── dataset/  notebooks/  models/  results/  static_app/
 │   ├── app.py  requirements.txt  README.md
 └── README.md
 ```

@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Egypt House Price Prediction</title>
+<meta name="description" content="Estimate the price of a property in Egypt with a tuned SVR model trained on 27,000+ listings.">
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --text: #1b1f24;
+    --muted: #5d6673;
+    --border: #dde1e6;
+    --field: #ffffff;
+    --accent: #0f6e5a;
+    --accent-soft: #e5f2ee;
+    --error: #b3261e;
+    --shadow: 0 1px 2px rgba(16, 24, 40, .06), 0 4px 16px rgba(16, 24, 40, .06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111418;
+      --card: #1a1e24;
+      --text: #e8eaed;
+      --muted: #9aa3ae;
+      --border: #2e343c;
+      --field: #14171c;
+      --accent: #4cc3a4;
+      --accent-soft: #17322b;
+      --error: #f2b8b5;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  main { max-width: 980px; margin: 0 auto; padding: 32px 16px 48px; }
+  header h1 { margin: 0 0 6px; font-size: 1.75rem; letter-spacing: -.01em; }
+  header p { margin: 0; color: var(--muted); max-width: 640px; }
+  .layout { display: grid; grid-template-columns: 1fr 340px; gap: 20px; margin-top: 24px; align-items: start; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); padding: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px; }
+  .grid .wide { grid-column: 1 / -1; }
+  label { display: block; font-size: .82rem; font-weight: 600; color: var(--muted); margin-bottom: 5px; }
+  input, select {
+    width: 100%; padding: 9px 11px; font: inherit; color: var(--text);
+    background: var(--field); border: 1px solid var(--border); border-radius: 8px;
+  }
+  input:focus, select:focus { outline: 2px solid var(--accent); outline-offset: -1px; border-color: transparent; }
+  input[aria-invalid="true"] { border-color: var(--error); }
+  .row3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 16px; }
+  .result { position: sticky; top: 16px; }
+  .result h2 { margin: 0 0 4px; font-size: .82rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+  .price { font-size: 2.1rem; font-weight: 700; letter-spacing: -.02em; color: var(--accent); font-variant-numeric: tabular-nums; line-height: 1.2; }
+  .per-m2 { margin-top: 4px; color: var(--text); font-variant-numeric: tabular-nums; }
+  .range { margin-top: 14px; padding: 10px 12px; background: var(--accent-soft); border-radius: 8px; font-size: .88rem; }
+  .msg { color: var(--error); font-size: .9rem; margin-top: 8px; min-height: 1.3em; }
+  .examples { margin-top: 18px; }
+  .examples h3 { margin: 0 0 8px; font-size: .82rem; font-weight: 600; color: var(--muted); }
+  .examples button {
+    display: block; width: 100%; text-align: left; margin-top: 6px; padding: 8px 10px; font: inherit; font-size: .88rem;
+    color: var(--text); background: transparent; border: 1px solid var(--border); border-radius: 8px; cursor: pointer;
+  }
+  .examples button:hover { border-color: var(--accent); }
+  .about { margin-top: 20px; color: var(--muted); font-size: .88rem; }
+  .about ul { margin: 6px 0 0; padding-left: 18px; }
+  a { color: var(--accent); }
+  @media (max-width: 760px) {
+    .layout { grid-template-columns: 1fr; }
+    .result { position: static; }
+    main { padding-top: 20px; }
+  }
+  @media (max-width: 420px) {
+    .grid, .row3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>🏠 Egypt House Price Prediction</h1>
+    <p>Describe a property and get an instant price estimate from a machine-learning model trained on 27,000+ real listings in Egypt.</p>
+  </header>
+
+  <div class="layout">
+    <form class="card" id="form" autocomplete="off" onsubmit="return false">
+      <div class="grid">
+        <div><label for="Type">Type</label><select id="Type"></select></div>
+        <div><label for="Furnished">Furnished</label><select id="Furnished"></select></div>
+        <div class="wide row3">
+          <div><label for="Area">Area (m²)</label><input id="Area" type="number" min="10" max="1000" step="1" value="150" inputmode="numeric"></div>
+          <div><label for="Bedrooms">Bedrooms</label><input id="Bedrooms" type="number" min="1" max="10" step="1" value="3" inputmode="numeric"></div>
+          <div><label for="Bathrooms">Bathrooms</label><input id="Bathrooms" type="number" min="1" max="10" step="1" value="2" inputmode="numeric"></div>
+        </div>
+        <div><label for="City">City / area</label><input id="City" list="City-list" value="New Cairo - El Tagamoa"><datalist id="City-list"></datalist></div>
+        <div><label for="Compound">Compound</label><input id="Compound" list="Compound-list" value="Unknown"><datalist id="Compound-list"></datalist></div>
+        <div><label for="Level">Level (floor)</label><select id="Level"></select></div>
+        <div><label for="Delivery_Term">Finishing</label><select id="Delivery_Term"></select></div>
+        <div><label for="Delivery_Date">Delivery date</label><select id="Delivery_Date"></select></div>
+        <div><label for="Payment_Option">Payment option</label><select id="Payment_Option"></select></div>
+      </div>
+    </form>
+
+    <aside class="card result" aria-live="polite">
+      <h2>Estimated price</h2>
+      <div class="price" id="price">Loading model…</div>
+      <div class="per-m2" id="perM2">&nbsp;</div>
+      <div class="range" id="range" hidden></div>
+      <div class="msg" id="msg"></div>
+      <div class="examples">
+        <h3>Try an example</h3>
+        <button type="button" data-ex="0">Apartment · 150 m² · New Cairo</button>
+        <button type="button" data-ex="1">Chalet · 110 m² · Marassi, North Coast</button>
+        <button type="button" data-ex="2">Villa · 450 m² · Sheikh Zayed</button>
+      </div>
+    </aside>
+  </div>
+
+  <section class="about">
+    <strong>About the model</strong>
+    <ul>
+      <li>SVR (C = 3) tuned with GridSearchCV, best of 13 regression models compared with 5-fold cross-validation.</li>
+      <li>Test R² = 0.67 on log price, median error ≈ 25 %. Location (compound, city) and size drive the price.</li>
+      <li>The trained scikit-learn model runs entirely in your browser, and its predictions match the Python model exactly.</li>
+      <li>Code, notebook and results: <a href="https://github.com/YossefIbrahem/NTI-Machine-Learning/tree/main/Final_Project" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </section>
+</main>
+
+<script src="model.js"></script>
+<script>
+(function () {
+  var MODEL = null;
+  var selects = ['Type', 'Furnished', 'Level', 'Delivery_Term', 'Delivery_Date', 'Payment_Option'];
+  var lists = ['City', 'Compound'];
+  var EXAMPLES = [
+    { Type: 'Apartment', Bedrooms: 3, Bathrooms: 2, Area: 150, Furnished: 'No', Level: '3', Compound: 'Unknown',
+      Payment_Option: 'Cash', Delivery_Date: 'Ready to move', Delivery_Term: 'Finished', City: 'New Cairo - El Tagamoa' },
+    { Type: 'Chalet', Bedrooms: 2, Bathrooms: 2, Area: 110, Furnished: 'No', Level: 'Ground', Compound: 'Marassi',
+      Payment_Option: 'Cash or Installment', Delivery_Date: '2024', Delivery_Term: 'Finished', City: 'North Coast' },
+    { Type: 'Stand Alone Villa', Bedrooms: 5, Bathrooms: 5, Area: 450, Furnished: 'No', Level: 'Unknown', Compound: 'Unknown',
+      Payment_Option: 'Cash', Delivery_Date: 'Ready to move', Delivery_Term: 'Semi Finished', City: 'Sheikh Zayed' }
+  ];
+  var DEFAULTS = EXAMPLES[0];
+
+  // friendlier order for a few dropdowns
+  var ORDER = {
+    Level: ['Ground', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '10+', 'Highest', 'Unknown'],
+    Delivery_Date: ['Ready to move', 'soon', 'within 6 months', '2022', '2023', '2024', '2025', '2026', '2027', 'Unknown'],
+    Delivery_Term: ['Finished', 'Semi Finished', 'Not Finished', 'Core & Shell', 'Unknown'],
+    Furnished: ['No', 'Yes', 'Unknown']
+  };
+  var LABELS = { 'Unknown Payment': 'Unknown' };
+
+  function sorted(name, values) {
+    var order = ORDER[name];
+    if (!order) return values.slice();
+    return values.slice().sort(function (a, b) {
+      var ia = order.indexOf(a), ib = order.indexOf(b);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    });
+  }
+
+  function $(id) { return document.getElementById(id); }
+
+  function fill() {
+    selects.forEach(function (name) {
+      var el = $(name);
+      sorted(name, MODEL.choices[name]).forEach(function (v) {
+        var o = document.createElement('option');
+        o.value = v; o.textContent = LABELS[v] || v;
+        el.appendChild(o);
+      });
+      el.value = DEFAULTS[name];
+    });
+    lists.forEach(function (name) {
+      var dl = $(name + '-list');
+      MODEL.choices[name].forEach(function (v) {
+        if (v.charAt(0) === '(') return;   // skip placeholder values such as "(View phone number)"
+        var o = document.createElement('option');
+        o.value = v; dl.appendChild(o);
+      });
+    });
+  }
+
+  function setExample(ex) {
+    Object.keys(ex).forEach(function (k) { $(k).value = ex[k]; });
+    update();
+  }
+
+  function fmt(n) { return Math.round(n).toLocaleString('en-US'); }
+
+  function readHouse() {
+    var house = {}, problems = [];
+    selects.concat(lists).forEach(function (k) { house[k] = $(k).value; });
+    lists.forEach(function (k) {
+      var ok = MODEL.choices[k].indexOf(house[k]) >= 0;
+      $(k).setAttribute('aria-invalid', ok ? 'false' : 'true');
+      if (!ok) problems.push(k === 'City' ? 'Choose a city from the list.' : 'Choose a compound from the list (or "Unknown").');
+    });
+    [['Area', 10, 1000], ['Bedrooms', 1, 10], ['Bathrooms', 1, 10]].forEach(function (f) {
+      var v = parseFloat($(f[0]).value);
+      var ok = isFinite(v) && v >= f[1] && v <= f[2];
+      $(f[0]).setAttribute('aria-invalid', ok ? 'false' : 'true');
+      if (!ok) problems.push(f[0] + ' must be between ' + f[1] + ' and ' + f[2] + '.');
+      house[f[0]] = f[0] === 'Area' ? v : Math.round(v);
+    });
+    return { house: house, problems: problems };
+  }
+
+  function update() {
+    if (!MODEL) return;
+    var r = readHouse();
+    if (r.problems.length) {
+      $('msg').textContent = r.problems[0];
+      $('price').textContent = '–';
+      $('perM2').innerHTML = '&nbsp;';
+      $('range').hidden = true;
+      return;
+    }
+    $('msg').textContent = '';
+    var price = HouseModel.predictPrice(MODEL, r.house);
+    $('price').textContent = fmt(price) + ' EGP';
+    $('perM2').textContent = fmt(price / r.house.Area) + ' EGP per m²';
+    $('range').hidden = false;
+    $('range').textContent = 'Half of the test predictions were within ±25 % of the real price, here ' +
+      fmt(price * 0.75) + ' – ' + fmt(price * 1.25) + ' EGP.';
+  }
+
+  fetch('model.json')
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (m) {
+      MODEL = m;
+      fill();
+      $('form').addEventListener('input', update);
+      $('form').addEventListener('change', update);
+      Array.prototype.forEach.call(document.querySelectorAll('[data-ex]'), function (b) {
+        b.addEventListener('click', function () { setExample(EXAMPLES[+b.getAttribute('data-ex')]); });
+      });
+      update();
+    })
+    .catch(function () {
+      $('price').textContent = '–';
+      $('msg').textContent = 'Could not load the model. Please refresh the page.';
+    });
+})();
+</script>
+</body>
+</html>

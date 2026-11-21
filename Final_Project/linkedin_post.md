@@ -1,13 +1,13 @@
 🏠 How much is a house in Egypt worth? I built a Machine Learning model to answer that.
 
-As part of the Machine Learning for Data Analysis track at NTI (National Telecommunication Institute), I worked on predicting property prices in Egypt from 27,000+ real listings.
+I just finished the Machine Learning for Data Analysis track at NTI (National Telecommunication Institute). For my final project I predicted property prices in Egypt from 27,000+ real listings.
 
 📊 The data
-Type, area, bedrooms, bathrooms, compound, city, finishing, payment option and delivery date – all stored as text with many "Unknown" values.
+Type, area, bedrooms, bathrooms, compound, city, finishing, payment option and delivery date. Every column was stored as text, with lots of "Unknown" values.
 
 🧹 Cleaning & preprocessing
-• Converted text to numbers, merged duplicated labels, removed 1,862 duplicate rows
-• Found prices that were really down-payments (a 120 m² chalet for 100,000 EGP!) and removed outliers using the IQR rule on price per m², learned from the training data only
+• Converted text to numbers, merged duplicate labels and removed 1,862 duplicate rows
+• Found prices that were really down payments (a 120 m² chalet for 100,000 EGP!) and removed outliers with the IQR rule on price per m², using limits learned from the training data only
 • Predicted log(Price) because the price was very skewed (skewness 6.8)
 • Built a Pipeline + ColumnTransformer (imputation, scaling, one-hot encoding) to avoid data leakage
 
@@ -16,18 +16,23 @@ I compared 13 regression models with 5-fold cross-validation: Linear Regression,
 Then I tuned the top 3 with GridSearchCV.
 
 🏆 Best result
-SVR (C=3) – R² = 0.67 on the test set (log price), with a median error of about 25%.
-The most important features were Compound, Area and City → location and size drive the price.
+SVR (C=3): R² = 0.67 on the test set (log price), with a median error of about 25%.
+The most important features were Compound, Area and City, so location and size drive the price.
 
 🚀 Deployment
-I deployed the model as a Gradio web app: enter the property details and get an instant price estimate.
+I deployed the model as a web app on Hugging Face: enter the property details and get an instant price estimate. The trained scikit-learn model runs right in the browser and gives exactly the same predictions as in Python.
 
-🔗 Live app: ADD_HUGGING_FACE_LINK
-💻 GitHub: ADD_GITHUB_LINK
+📚 Also in the repo
+• 5 tasks, each following the same workflow (cleaning → EDA → Pipeline → model comparison → GridSearchCV → evaluation → Gradio app):
+  Stroke prediction, House rent, Student performance, Customer segmentation and Diabetes prediction (99.75% accuracy)
+• 20 practice notebooks from DEPI / Udemy: Adult Census Income, Bank term deposits, Ames Housing, Laptop prices, Used cars, Telecom churn and more
+
+🔗 Live app: https://huggingface.co/spaces/YoussefIbrahem0/egypt-house-price-prediction
+💻 GitHub: https://github.com/YossefIbrahem/NTI-Machine-Learning
 
 Thanks to NTI and our instructor for the guidance! 🙏
 
-#MachineLearning #DataScience #Python #ScikitLearn #RealEstate #Egypt #NTI #Gradio
+#MachineLearning #DataScience #Python #ScikitLearn #RealEstate #Egypt #NTI #DEPI #HuggingFace
 
 ---
 Screenshots to attach:

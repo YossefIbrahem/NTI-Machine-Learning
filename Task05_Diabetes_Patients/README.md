@@ -4,7 +4,7 @@ Predict whether a patient is **Diabetic** or **Non-Diabetic** from lab results, 
 
 - **Dataset:** `dataset/diabetes_patients.csv` – 10,000 patients, 8 features (Age, Gender, Blood Sugar, Creatinine, BMI, Urea, Cholesterol, HbA1c), target `Class`, with missing values; **imbalanced** (91 % Diabetic)
 - **Notebook:** [`notebook.ipynb`](notebook.ipynb)
-- **App:** [`app.py`](app.py) (Gradio) – **Live app:** `ADD_YOUR_HUGGING_FACE_LINK_HERE`
+- **App:** [`app.py`](app.py) (Gradio) – **Live app:** https://huggingface.co/spaces/YoussefIbrahem0/diabetes-prediction
 - **Main metric:** F1 (macro) – both classes count equally – plus recall per class, ROC-AUC, PR curves
 
 ## Steps
@@ -52,10 +52,15 @@ python app.py              # opens http://127.0.0.1:7860
 The app asks only for **HbA1c** and **blood sugar** (the only useful features), adds the same two flags as the notebook, and loads
 `models/diabetes_model.pkl` – the full pipeline (imputer + scaler + Logistic Regression).
 
-## Deploy (Hugging Face Spaces – free)
-1. Create a new Space at https://huggingface.co/new-space → SDK **Gradio**.
-2. Upload `app.py`, `requirements.txt` and the `models/` folder.
-3. When the build finishes, the Space link is the live deployment link – paste it above.
+## Deployment (Hugging Face Spaces – free static Space)
+**Live app:** https://huggingface.co/spaces/YoussefIbrahem0/diabetes-prediction
+
+Hugging Face now needs a PRO subscription to host Gradio Spaces, while static Spaces stay free, so the trained model runs in the browser:
+`static_app/export_model.py` saves the Pipeline's numbers (imputer, scaler, one-hot categories, Logistic Regression coefficients) from `models/diabetes_model.pkl` to `static_app/model.json`,
+and `static_app/model.js` repeats the Pipeline step by step; `static_app/index.html` is the form.
+The JavaScript predictions were checked against the Python model on 168,941 HbA1c / blood-sugar combinations (no label changed): the largest difference was 3e-16, so they are **exactly** the same.
+
+To update the live app after re-training: run `python static_app/export_model.py`, then upload `index.html`, `model.js` and `model.json` to the Space.
 
 To re-train: `pip install pandas numpy matplotlib seaborn scipy scikit-learn imbalanced-learn xgboost lightgbm gradio`, then run all cells of `notebook.ipynb` (≈ 20 seconds).
 

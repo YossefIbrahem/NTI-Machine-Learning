@@ -1,0 +1,50 @@
+{
+ "num_cols": [
+  "Hours Studied",
+  "Previous Scores",
+  "Sleep Hours",
+  "Sample Question Papers Practiced"
+ ],
+ "num_median": [
+  5.0,
+  69.0,
+  7.0,
+  5.0
+ ],
+ "num_mean": [
+  5.000633392449962,
+  69.50304028375982,
+  6.548264504687104,
+  4.689764378008614
+ ],
+ "num_scale": [
+  2.587339251521212,
+  17.298184547185176,
+  1.6963989350413724,
+  2.433905449839087
+ ],
+ "cat_cols": [
+  "Extracurricular Activities"
+ ],
+ "cat_fill": [
+  "No"
+ ],
+ "cat_categories": [
+  [
+   "No",
+   "Yes"
+  ]
+ ],
+ "cat_drop": [
+  0
+ ],
+ "coef": [
+  7.400378540316495,
+  17.596907621571372,
+  0.8140101224494478,
+  0.463915147269009,
+  0.47917787171641424
+ ],
+ "intercept": 55.100855150361156,
+ "kind": "regression"
+}

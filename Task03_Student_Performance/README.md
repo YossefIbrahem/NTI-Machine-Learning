@@ -4,7 +4,7 @@ Predict a student's **Performance Index (10 – 100)** from study hours, previou
 
 - **Dataset:** `dataset/Student_Performance.csv` – 10,000 students, 5 features
 - **Notebook:** [`notebook.ipynb`](notebook.ipynb)
-- **App:** [`app.py`](app.py) (Gradio) – **Live app:** `ADD_YOUR_HUGGING_FACE_LINK_HERE`
+- **App:** [`app.py`](app.py) (Gradio) – **Live app:** https://huggingface.co/spaces/YoussefIbrahem0/student-performance-prediction
 - **Main metric:** R², plus MAE, MSE, RMSE
 
 ## Steps
@@ -40,10 +40,15 @@ python app.py              # opens http://127.0.0.1:7860
 ```
 The app loads `models/student_model.pkl` – the full pipeline (imputers + scaler + encoder + Ridge) saved by the notebook – so the input is preprocessed exactly like in training.
 
-## Deploy (Hugging Face Spaces – free)
-1. Create a new Space at https://huggingface.co/new-space → SDK **Gradio**.
-2. Upload `app.py`, `requirements.txt` and the `models/` folder.
-3. When the build finishes, the Space link is the live deployment link – paste it above.
+## Deployment (Hugging Face Spaces – free static Space)
+**Live app:** https://huggingface.co/spaces/YoussefIbrahem0/student-performance-prediction
+
+Hugging Face now needs a PRO subscription to host Gradio Spaces, while static Spaces stay free, so the trained model runs in the browser:
+`static_app/export_model.py` saves the Pipeline's numbers (imputer, scaler, one-hot categories, Ridge coefficients) from `models/student_model.pkl` to `static_app/model.json`,
+and `static_app/model.js` repeats the Pipeline step by step; `static_app/index.html` is the form.
+The JavaScript predictions were checked against the Python model on all 64,800 slider combinations: the largest difference was 3e-14 points, so they are **exactly** the same.
+
+To update the live app after re-training: run `python static_app/export_model.py`, then upload `index.html`, `model.js` and `model.json` to the Space.
 
 To re-train: `pip install pandas numpy matplotlib seaborn scipy scikit-learn xgboost lightgbm gradio`, then run all cells of `notebook.ipynb` (≈ 30 seconds).
 

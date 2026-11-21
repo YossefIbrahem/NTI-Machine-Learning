@@ -21,9 +21,9 @@ train/test split → Pipeline + ColumnTransformer → all suitable models with c
 |---|---|---|---|---|---|---|
 | 01 | [Stroke Prediction](Task01_Stroke_Dataset) | Binary classification (imbalanced, SMOTE) | 11 | Logistic Regression | ROC-AUC 0.84, Recall 0.82 | – |
 | 02 | [House Rent](Task02_House_Rent) | Regression | 13 | Gradient Boosting | R² 0.83 (log rent) | – |
-| 03 | [Student Performance](Task03_Student_Performance) | Regression | 13 | Ridge | R² 0.989, MAE 1.65 | 🚀 `ADD_LINK` |
+| 03 | [Student Performance](Task03_Student_Performance) | Regression | 13 | Ridge | R² 0.989, MAE 1.65 | 🚀 [Live app](https://huggingface.co/spaces/YoussefIbrahem0/student-performance-prediction) |
 | 04 | [Customer Segmentation](Task04_Customer_Segmentation) | Multiclass classification (4 segments) | 11 | LightGBM | Accuracy 0.54, ROC-AUC 0.80 | – |
-| 05 | [Diabetes Prediction](Task05_Diabetes_Patients) | Binary classification (imbalanced) | 11 | Logistic Regression | Accuracy 99.75 %, F1 macro 0.992 | 🚀 `ADD_LINK` |
+| 05 | [Diabetes Prediction](Task05_Diabetes_Patients) | Binary classification (imbalanced) | 11 | Logistic Regression | Accuracy 99.75 %, F1 macro 0.992 | 🚀 [Live app](https://huggingface.co/spaces/YoussefIbrahem0/diabetes-prediction) |
 
 ## Practice Notebooks
 [`Practice_Notebooks`](Practice_Notebooks) – 20 session and assignment notebooks from the DEPI / Udemy practice, named after their datasets
@@ -35,9 +35,9 @@ NTI-Machine-Learning/
 ├── Practice_Notebooks/             # 20 practice notebooks, named by dataset
 ├── Task01_Stroke_Dataset/          # dataset/, notebook.ipynb, README.md
 ├── Task02_House_Rent/              # dataset/, notebook.ipynb, README.md
-├── Task03_Student_Performance/     # dataset/, notebook.ipynb, README.md, app.py, requirements.txt, models/
+├── Task03_Student_Performance/     # dataset/, notebook.ipynb, README.md, app.py, requirements.txt, models/, static_app/
 ├── Task04_Customer_Segmentation/   # dataset/, notebook.ipynb, README.md
-├── Task05_Diabetes_Patients/       # dataset/, notebook.ipynb, README.md, app.py, requirements.txt, models/
+├── Task05_Diabetes_Patients/       # dataset/, notebook.ipynb, README.md, app.py, requirements.txt, models/, static_app/
 ├── Final_Project/
 │   ├── dataset/  notebooks/  models/  results/  static_app/
 │   ├── app.py  requirements.txt  README.md

@@ -25,6 +25,7 @@ I deployed the model as a web app on Hugging Face: enter the property details an
 📚 Also in the repo
 • 5 tasks, each following the same workflow (cleaning → EDA → Pipeline → model comparison → GridSearchCV → evaluation → Gradio app):
   Stroke prediction, House rent, Student performance, Customer segmentation and Diabetes prediction (99.75% accuracy)
+  The Student performance and Diabetes models are live web apps too (links in the GitHub README)
 • 20 practice notebooks from DEPI / Udemy: Adult Census Income, Bank term deposits, Ames Housing, Laptop prices, Used cars, Telecom churn and more
 
 🔗 Live app: https://huggingface.co/spaces/YoussefIbrahem0/egypt-house-price-prediction
